@@ -3583,7 +3583,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "node-template"
+name = "node-c2b"
 version = "4.0.0-dev"
 dependencies = [
  "clap",
@@ -3592,7 +3592,7 @@ dependencies = [
  "frame-system",
  "futures",
  "jsonrpsee",
- "node-template-runtime",
+ "node-c2b-runtime",
  "pallet-transaction-payment",
  "pallet-transaction-payment-rpc",
  "sc-basic-authorship",
@@ -3626,7 +3626,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "node-template-runtime"
+name = "node-c2b-runtime"
 version = "4.0.0-dev"
 dependencies = [
  "frame-benchmarking",
@@ -3638,10 +3638,10 @@ dependencies = [
  "frame-try-runtime",
  "pallet-aura",
  "pallet-balances",
+ "pallet-c2b",
  "pallet-grandpa",
  "pallet-randomness-collective-flip",
  "pallet-sudo",
- "pallet-template",
  "pallet-timestamp",
  "pallet-transaction-payment",
  "pallet-transaction-payment-rpc-runtime-api",
@@ -3844,6 +3844,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "pallet-c2b"
+version = "4.0.0-dev"
+dependencies = [
+ "frame-benchmarking",
+ "frame-support",
+ "frame-system",
+ "parity-scale-codec",
+ "scale-info",
+ "sp-core",
+ "sp-io",
+ "sp-runtime",
+]
+
+[[package]]
 name = "pallet-grandpa"
 version = "4.0.0-dev"
 source = "git+https://github.com/paritytech/substrate.git#2a0eeff4008573f6ead70eb9bd43cf6d268d2e7d"
@@ -3913,20 +3927,6 @@ dependencies = [
  "sp-io",
  "sp-runtime",
  "sp-std",
-]
-
-[[package]]
-name = "pallet-template"
-version = "4.0.0-dev"
-dependencies = [
- "frame-benchmarking",
- "frame-support",
- "frame-system",
- "parity-scale-codec",
- "scale-info",
- "sp-core",
- "sp-io",
- "sp-runtime",
 ]
 
 [[package]]
