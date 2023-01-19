@@ -10,7 +10,7 @@ use serde::{Deserialize, Serialize};
 use frame_support::traits::Time;
 use frame_support::sp_runtime::SaturatedConversion;
 use frame_support::traits::Randomness;
-use frame_support::sp_runtime::traits::Hash;
+// use frame_support::sp_runtime::traits::Hash;
 
 #[cfg(test)]
 mod mock;
@@ -45,7 +45,7 @@ pub mod pallet {
 
 	#[pallet::storage]
 	#[pallet::getter(fn get_kitty)]
-	pub type Businesses<T: Config> = StorageMap<_, Blake2_128Concat, T::Hash, Business<T>, OptionQuery>;
+	pub type Businesses<T: Config> = StorageMap<_, Blake2_128Concat, BusinessId, Business<T>, OptionQuery>;
 
 	// Pallets use events to inform users when important changes are made.
 	// https://docs.substrate.io/main-docs/build/events-errors/
@@ -77,13 +77,12 @@ pub mod pallet {
 			// Make sure the caller is from a signed origin
 			let owner = ensure_signed(origin)?;
 			let now:u64 = T::Timestamp::now().saturated_into();
-			let id =  Self::gen_id();
 			let new_business = Business::<T>{id:business_id,owner:owner.clone(),created_date:now};
 
-			// Check if the kitty does not already exist in our storage map
-			// ensure!(!Businesses::<T>::contains_key(&new_business.id), Error::<T>::DuplicateBusiness);
+			// Check if the business does not already exist in our storage map
+			ensure!(!Businesses::<T>::contains_key(&business_id), Error::<T>::DuplicateBusiness);
 
-			Businesses::<T>::insert(id, new_business);
+			Businesses::<T>::insert(business_id, new_business);
 
 			Ok(())
 		}
@@ -96,12 +95,5 @@ pub mod pallet {
 		pub id: BusinessId,
 		pub owner: T::AccountId,
 		pub created_date: u64,
-	}
-	impl<T: Config> Pallet<T> {
-		fn gen_id() -> T::Hash {
-			let block_number = <frame_system::Pallet<T>>::block_number();
-			let (seed,_) = T::Random::random_seed();
-			T::Hashing::hash_of(&(seed,block_number))
-		}
 	}
 }

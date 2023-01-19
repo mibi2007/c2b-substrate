@@ -1,4 +1,4 @@
 [workspace]
-members = ["node", "pallets/template", "pallets/businesses", "runtime"]
+members = ["node", "pallets/c2b", "pallets/businesses", "runtime"]
 [profile.release]
 panic = "unwind"

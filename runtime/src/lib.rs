@@ -47,8 +47,8 @@ use pallet_transaction_payment::{ConstFeeMultiplier, CurrencyAdapter, Multiplier
 pub use sp_runtime::BuildStorage;
 pub use sp_runtime::{Perbill, Permill};
 
-/// Import the template pallet.
-pub use pallet_template;
+/// Import the c2b pallets.
+pub use pallet_c2b;
 pub use pallet_businesses;
 pub use pallet_customers;
 
@@ -99,8 +99,8 @@ pub mod opaque {
 // https://docs.substrate.io/main-docs/build/upgrade#runtime-versioning
 #[sp_version::runtime_version]
 pub const VERSION: RuntimeVersion = RuntimeVersion {
-	spec_name: create_runtime_str!("node-template"),
-	impl_name: create_runtime_str!("node-template"),
+	spec_name: create_runtime_str!("node-c2b"),
+	impl_name: create_runtime_str!("node-c2b"),
 	authoring_version: 1,
 	// The version of the runtime specification. A full node will not attempt to use its native
 	//   runtime in substitute for the on-chain Wasm runtime unless all of `spec_name`,
@@ -277,9 +277,11 @@ impl pallet_sudo::Config for Runtime {
 	type RuntimeCall = RuntimeCall;
 }
 
-/// Configure the pallet-template in pallets/template.
-impl pallet_template::Config for Runtime {
+/// Configure the pallet-c2b in pallets/c2b.
+impl pallet_c2b::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
+	// type BusinessesModule = BusinessesModule;
+	// type CustomersModule = CustomersModule;
 }
 impl pallet_businesses::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
@@ -308,8 +310,8 @@ construct_runtime!(
 		Balances: pallet_balances,
 		TransactionPayment: pallet_transaction_payment,
 		Sudo: pallet_sudo,
-		// Include the custom logic from the pallet-template in the runtime.
-		TemplateModule: pallet_template,
+		// Include the custom logic from the pallet-c2b in the runtime.
+		C2BModule: pallet_c2b,
 		BusinessesModule: pallet_businesses,
 		CustomersModule: pallet_customers,
 	}
@@ -358,7 +360,7 @@ mod benches {
 		[frame_system, SystemBench::<Runtime>]
 		[pallet_balances, Balances]
 		[pallet_timestamp, Timestamp]
-		[pallet_template, TemplateModule]
+		[pallet_c2b, C2BModule]
 		[pallet_businesses, BusinessesModule]
 		[pallet_customers, CustomersModule]
 	);
